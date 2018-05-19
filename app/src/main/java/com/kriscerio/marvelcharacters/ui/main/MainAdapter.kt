@@ -12,10 +12,14 @@ import android.widget.TextView
 import android.widget.Toast
 import com.kriscerio.marvelcharacters.R
 import com.kriscerio.marvelcharacters.data.HeroesDataClass
+import com.kriscerio.marvelcharacters.data.KEY
 import com.kriscerio.marvelcharacters.ui.characterinfo.CharacterActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
-class MainAdapter (val heroList : ArrayList<HeroesDataClass>) : RecyclerView.Adapter<MainAdapter.ViewHolder>(){
+class MainAdapter (val context: Context,val heroList : ArrayList<HeroesDataClass>) : RecyclerView.Adapter<MainAdapter.ViewHolder>(){
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.item_row_main,parent,false)
@@ -31,6 +35,12 @@ class MainAdapter (val heroList : ArrayList<HeroesDataClass>) : RecyclerView.Ada
         //holder.civHeroImage.background = hero.image
         holder.tvHeroName.text = hero.hero
         holder.tvHeroDescription.text = hero.description
+        holder.layout.setOnClickListener {
+            val intent = Intent(context,CharacterActivity::class.java)
+                intent.putExtra(KEY.HERO_NAME_KEY,""+holder.tvHeroName.text.toString())
+                intent.putExtra(KEY.HERO_NAME_DESCRIPTION_KEY,""+holder.tvHeroDescription.text.toString())
+                context.startActivity(intent)
+        }
     }
 
     class ViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -39,20 +49,15 @@ class MainAdapter (val heroList : ArrayList<HeroesDataClass>) : RecyclerView.Ada
         val tvHeroDescription = itemView.findViewById(R.id.tv_hero_description) as TextView
         val layout = itemView.findViewById(R.id.ll_hero_info) as LinearLayout
 
-        companion object {
-            const val HERO_NAME_KEY = "HERO_NAME"
-            const val HERO_NAME_DESCRIPTION_KEY = "HERO_DESCRIPTION"
-        }
-
-        init {
-            itemView.setOnClickListener {
-                val intent = Intent(itemView.context,CharacterActivity::class.java)
-                intent.putExtra(HERO_NAME_KEY,""+tvHeroName)
-                intent.putExtra(HERO_NAME_DESCRIPTION_KEY,""+tvHeroDescription)
-                itemView.context.startActivity(intent)
-
-            }
-        }
+//        init {
+//            itemView.setOnClickListener {
+//                val intent = Intent(itemView.context,CharacterActivity::class.java)
+//                intent.putExtra(HERO_NAME_KEY,""+tvHeroName.toString())
+//                intent.putExtra(HERO_NAME_DESCRIPTION_KEY,""+tvHeroDescription.toString())
+//                itemView.context.startActivity(intent)
+//
+//            }
+//        }
     }
 
 }
