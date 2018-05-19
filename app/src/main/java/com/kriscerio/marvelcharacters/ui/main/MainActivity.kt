@@ -20,15 +20,15 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView = findViewById(R.id.recyclerView) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this,LinearLayout.VERTICAL,false)
-        val adapter = MainAdapter(hero)
+        val adapter = MainAdapter(this@MainActivity,hero)
         recyclerView.adapter = adapter
 
         HeroesList()
     }
 
     fun HeroesList(){
-//
-//        val url = "https://gateway.marvel.com:443/v1/public/characters?apikey=7f412d2375896165f659472536601234"
+
+   //     val url = "https://gateway.marvel.com:443/v1/public/characters?apikey=1e41e418afbcb509a8f42546edfab602360351c4"
 //        val request = Request.Builder().url(url).build()
 //
 //        val client = OkHttpClient()
