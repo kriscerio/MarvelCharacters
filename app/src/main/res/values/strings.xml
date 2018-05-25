@@ -2,7 +2,7 @@
     <string name="app_name">Marvel Characters</string>
     <string name="hero_name">Hero Name</string>
     <string name="hero_description">Hero Description</string>
-
+    <string name="string_no_description">No Description</string>
     <!--LOREM IPSUM-->
     <string name="lorem">Lorem ipsum dolor sit amet, fabulas invenire mediocrem eum ex. Sint oratio
         veniam vel eu, illud illum in qui, ad per inani aeterno. Modus singulis cu sed, rebum exerci
