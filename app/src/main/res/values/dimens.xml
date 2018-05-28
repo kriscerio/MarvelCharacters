@@ -4,6 +4,9 @@
     <!--Margins-->
     <dimen name="margin_small">12dp</dimen>
 
+    <!--dp's-->
+    <dimen name="dp5">5dp</dimen>
+
     <!--Text size-->
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_medium">14sp</dimen>

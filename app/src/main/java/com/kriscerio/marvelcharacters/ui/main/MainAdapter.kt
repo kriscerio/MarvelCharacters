@@ -10,6 +10,8 @@ import com.kriscerio.marvelcharacters.ui.main.`object`.MainFeed
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_row_main.view.*
 
+
+
 class MainAdapter (val mainFeed : MainFeed): RecyclerView.Adapter<ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
