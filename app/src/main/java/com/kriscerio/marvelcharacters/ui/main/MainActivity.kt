@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView_main.layoutManager = LinearLayoutManager(this)
 
-        CharacterList()
+        FetchCharacterList()
     }
 
-    fun CharacterList() {
+    fun FetchCharacterList() {
         val url = "https://gateway.marvel.com:443/v1/public/characters?ts=9999-12-31&apikey=7f412d2375896165f659472536601234&hash=38cf8499e7b991db3636ffe88eca5a86"
         val request = Request.Builder().url(url).build()
 

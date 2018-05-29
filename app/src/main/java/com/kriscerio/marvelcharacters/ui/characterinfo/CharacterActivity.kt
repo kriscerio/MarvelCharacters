@@ -5,10 +5,16 @@ import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.widget.TextView
+import com.google.gson.GsonBuilder
 import com.kriscerio.marvelcharacters.R
 import com.kriscerio.marvelcharacters.data.KEY
-import com.kriscerio.marvelcharacters.ui.main.MainAdapter
+import com.kriscerio.marvelcharacters.ui.main.`object`.MainFeed
+import kotlinx.android.synthetic.main.activity_character.*
+import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.*
+import java.io.IOException
 
 class CharacterActivity : AppCompatActivity() {
 
@@ -19,26 +25,53 @@ class CharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
 
+        init()
+
+        val navBarTitle = intent.getStringExtra(KEY.HERO_NAME_KEY)
+        supportActionBar?.title = navBarTitle
+
+        val tvHeroDescription = intent.getStringExtra(KEY.HERO_NAME_DESCRIPTION_KEY)
+//        tv_hero_description.setText(tvHeroDescription)
+        if (tvHeroDescription.isEmpty()) {
+            tv_hero_description.setText(R.string.string_no_description)
+        }else {
+            tv_hero_description.setText(tvHeroDescription)
+        }
+
+        FetchCharacterInfo()
+    }
+
+    fun init() {
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         collapsingToolbarLayout = findViewById<CollapsingToolbarLayout>(R.id.collapsingToolBar)
-//        if (supportActionBar != null) {
-//            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-//        }
 
 
-        val heroName = intent.getStringExtra(KEY.HERO_NAME_KEY)
-        val heroDescription = intent.getStringExtra(KEY.HERO_NAME_DESCRIPTION_KEY)
+    }
 
-        val tvHeroName = findViewById<TextView>(R.id.tv_hero_name)
-        val tvHeroDescription = findViewById<TextView>(R.id.tv_hero_description)
-//
-        tvHeroName.setText(heroName)
-        tvHeroDescription.setText(heroDescription)
-//        println("HERO NAME : "+heroName)
-//        println("HERO DESCRIPTION : "+heroDescription)
+    fun FetchCharacterInfo() {
+        val url = "https://gateway.marvel.com:443/v1/public/characters?ts=9999-12-31&apikey=7f412d2375896165f659472536601234&hash=38cf8499e7b991db3636ffe88eca5a86"
+        val request = Request.Builder().url(url).build()
 
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call?, response: Response?) {
+                val body = response?.body()?.string()
+                Log.d("Message::::",body)
 
+                val gson = GsonBuilder().create()
+                val mainFeed = gson.fromJson(body, MainFeed::class.java)
+
+//                runOnUiThread {
+//                    recyclerView_main.adapter = MainAdapter(mainFeed)
+//                }
+            }
+
+            override fun onFailure(call: Call?, e: IOException?) {
+                println("Failed to execute request")
+            }
+        })
     }
 }
