@@ -56,6 +56,7 @@ class ViewHolder (val view : View, var result : Result? = null) : RecyclerView.V
             val intent = Intent(view.context,CharacterActivity::class.java)
             intent.putExtra(KEY.HERO_NAME_KEY,result?.name)
             intent.putExtra(KEY.HERO_NAME_DESCRIPTION_KEY,result?.description)
+            intent.putExtra(KEY.HERO_IMAGE_KEY,result?.thumbnail?.path)
             view.context.startActivity(intent)
         }
     }

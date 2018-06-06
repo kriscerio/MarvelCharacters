@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder
 import com.kriscerio.marvelcharacters.R
 import com.kriscerio.marvelcharacters.data.KEY
 import com.kriscerio.marvelcharacters.ui.main.`object`.MainFeed
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_character.*
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
@@ -30,6 +31,7 @@ class CharacterActivity : AppCompatActivity() {
         val navBarTitle = intent.getStringExtra(KEY.HERO_NAME_KEY)
         supportActionBar?.title = navBarTitle
 
+        //getIntent from main
         val tvHeroDescription = intent.getStringExtra(KEY.HERO_NAME_DESCRIPTION_KEY)
 //        tv_hero_description.setText(tvHeroDescription)
         if (tvHeroDescription.isEmpty()) {
@@ -37,6 +39,11 @@ class CharacterActivity : AppCompatActivity() {
         }else {
             tv_hero_description.setText(tvHeroDescription)
         }
+
+        val jpg : String = ".jpg"
+        val ivHeroImage = intent.getStringExtra(KEY.HERO_IMAGE_KEY)
+        val imageURL : String = "$ivHeroImage$jpg"
+        Picasso.get().load(imageURL).into(iv_hero_image)
 
         FetchCharacterInfo()
     }
@@ -46,7 +53,7 @@ class CharacterActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        collapsingToolbarLayout = findViewById<CollapsingToolbarLayout>(R.id.collapsingToolBar)
+        collapsingToolbarLayout = findViewById(R.id.collapsingToolBar)
 
 
     }
